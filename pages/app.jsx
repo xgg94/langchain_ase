@@ -23,9 +23,10 @@ export default function App() {
       },
     });
     const res = await response.json();
-    console.log(res);
+    console.log(`all embeddings:`, res);
     setEmbeddingNames([...res]);
     setActiveEmbedding(res[0]);
+    console.log(`active embedding: ${res[0]}`);
   };
 
   const handleSubmit = async (e) => {
@@ -33,8 +34,7 @@ export default function App() {
     const question = input;
     setInput("");
 
-    console.log("submit");
-    console.log(input);
+    console.log(`input: ${input}`);
     setMessages([
       ...messages,
       {
@@ -55,7 +55,7 @@ export default function App() {
       }),
     });
     const { chainResponse, genResponse } = await response.json();
-    console.log("response is", genResponse);
+
     setMessages([
       ...messages,
       {
@@ -71,7 +71,6 @@ export default function App() {
           : chainResponse.text,
       },
     ]);
-    console.log(messages);
   };
 
   const initEmbedding = async () => {
@@ -101,7 +100,6 @@ export default function App() {
         name="embedding"
         id=""
         onChange={(e) => {
-          console.log(e.target.value);
           setActiveEmbedding(e.target.value);
         }}
       >
@@ -151,7 +149,6 @@ export default function App() {
               type="checkbox"
               checked={isChecked}
               onChange={(e) => {
-                console.log(e.target.checked);
                 setIsChecked(e.target.checked);
               }}
             />

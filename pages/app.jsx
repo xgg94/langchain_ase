@@ -111,7 +111,8 @@ export default function App() {
       </select>
 
       {/* Chat history*/}
-      <div className="w-full max-w-4xl h-5/6 overflow-scroll ">
+      <div className="border-t border-white border-opacity-40 w-screen"></div>
+      <div className="w-full max-w-4xl h-5/6 overflow-scroll  ">
         <div className=" m-auto  h-full flex flex-col text-white  ">
           {messages.length
             ? messages.map((message, index) => (
@@ -134,6 +135,7 @@ export default function App() {
       </div>
 
       {/* Text input */}
+      <div className="border-t border-white border-opacity-40 w-screen"></div>
       <form
         onSubmit={handleSubmit}
         className=" flex w-full justify-center fixed bottom-20 "

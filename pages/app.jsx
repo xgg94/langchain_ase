@@ -121,7 +121,11 @@ export default function App() {
                   ) : (
                     <span className="text-sm text-green-400">AI: </span>
                   )}
-                  <span className="font-normal text-sm">{message.content}</span>
+                  <span className="font-normal text-sm">
+                    {message.content.split("\n").map((str, index) => (
+                      <p key={index}>{str}</p>
+                    ))}
+                  </span>
                 </div>
               ))
             : null}

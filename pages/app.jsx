@@ -27,9 +27,9 @@ const SceneContextModal = dynamic(
     ssr: false,
   }
 );
-const Lottie = dynamic(() => import("lottie-react"), {
-  ssr: false,
-});
+// const Lottie = dynamic(() => import("lottie-react"), {
+//   ssr: false,
+// });
 
 export default function App() {
   const [messages, setMessages] = useState([]);

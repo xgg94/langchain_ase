@@ -3,9 +3,9 @@
 import { AIChatMessage, HumanChatMessage } from "langchain/schema";
 import { TextLoader } from "langchain/document_loaders/fs/text";
 import { DocxLoader } from "langchain/document_loaders/fs/docx";
-import { HNSWLib } from "langchain/vectorstores";
+import { HNSWLib } from "langchain/vectorstores/hnswlib";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-import { OpenAIEmbeddings } from "langchain/embeddings";
+import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { VectorDBQAChain } from "langchain/chains";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
 import * as fs from "fs";
@@ -15,7 +15,7 @@ import { Document } from "langchain/document";
 
 const FILENAME = "data";
 const DOCTYPE = "txt";
-const VECTORSTORE_NAME = "harry_potter_1";
+const VECTORSTORE_NAME = "der_kleine_prinz";
 
 export default async function handler(req, res) {
   try {

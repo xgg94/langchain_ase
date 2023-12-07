@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const folderPath = path.join(__dirname, "../../../../vectorStore");
+const folderPath = path.join(__dirname, "../../../../../vectorStore");
 
 export default async function handler(req, res) {
   let embeddingFiles = [];

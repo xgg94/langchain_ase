@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   const { message, assistantId, threadId } = req.body;
 
   console.log(threadId);
-  if (!threadId.includes("thread")) {
+  if (!threadId) {
     const run = await openai.beta.threads.createAndRun({
       assistant_id: assistantId,
       thread: {

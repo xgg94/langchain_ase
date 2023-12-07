@@ -22,7 +22,8 @@
     "react-dnd": "^16.0.1",
     "react-dom": "18.2.0",
     "react-quill": "^2.0.0",
-    "react-select": "^5.8.0"
+    "react-select": "^5.8.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/node": "^20.10.3",

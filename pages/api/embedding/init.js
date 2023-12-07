@@ -15,7 +15,7 @@ import { Document } from "langchain/document";
 
 const FILENAME = "data";
 const DOCTYPE = "txt";
-const VECTORSTORE_NAME = "der_kleine_prinz";
+const VECTORSTORE_NAME = "arpad";
 
 export default async function handler(req, res) {
   try {

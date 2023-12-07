@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { updateMessages } from "../../utils/chat/updateMessages";
+import { ThreadMessage } from "openai/resources/beta/threads/messages/messages";
+import { Thread } from "openai/resources/beta/threads/threads";
+import { Run } from "openai/resources/beta/threads/runs/runs";
+import { Assistant } from "openai/resources/beta/assistants/assistants";
 
-const useAssistant = (prompt: string) => {
-  const [allAssistants, setAllAssistants] = useState<any>(null);
-  const [assistant, setAssistant] = useState<any>(null);
-  const [activeRun, setActiveRun] = useState(false);
-  const [thread, setThread] = useState({
-    id: "-",
-  });
-
-  const [run, setRun] = useState({
-    id: "-",
-  });
+const useAssistant = () => {
+  const [allAssistants, setAllAssistants] = useState<Assistant[] | null>(null);
+  const [assistant, setAssistant] = useState<Assistant | null>(null);
+  const [assistantIsLoading, setAssistantIsLoading] = useState(false);
+  const [messages, setMessages] = useState<ThreadMessage[]>([]);
+  const [thread, setThread] = useState<Thread | null>(null);
+  const [run, setRun] = useState<Run | null>(null);
 
   useEffect(() => {
     getAssistants();
@@ -29,8 +30,18 @@ const useAssistant = (prompt: string) => {
     setAssistant(res.data[0]);
   };
 
-  const assistantRequest = async (prompt: string) => {
+  // get assistant response provide prompt and optional message history
+  const getAssistantResponse = async (
+    prompt: string,
+    messageHistory?: ThreadMessage[]
+  ) => {
+    setAssistantIsLoading(true);
     const question = prompt;
+
+    console.log("history", messageHistory);
+    if (messageHistory) {
+      setMessages(messageHistory);
+    }
 
     // get run (if no thread exists, create one)
     const response = await fetch("/api/assistant/sendMessage", {
@@ -40,8 +51,8 @@ const useAssistant = (prompt: string) => {
       },
       body: JSON.stringify({
         message: question,
-        assistantId: assistant.id,
-        threadId: thread.id,
+        assistantId: assistant?.id,
+        threadId: thread?.id,
       }),
     });
 
@@ -125,8 +136,33 @@ const useAssistant = (prompt: string) => {
       await new Promise<void>((done) => setTimeout(() => done(), 1000));
 
       //deactivate loading animation
-      setActiveRun(false);
+      setAssistantIsLoading(false);
+
+      //updating messages (optional set function, returns messages history)
+      return await updateMessages(
+        threadRes,
+        messageHistory || messages,
+        setMessages
+      );
     }
+  };
+
+  const setAssistantById = (id: string) => {
+    const found = allAssistants?.find((assistant) => assistant.id === id);
+    if (found) {
+      console.log("found assistant", found);
+      setAssistant(found);
+    }
+  };
+
+  return {
+    allAssistants,
+    activeAssistant: assistant,
+    setAssistantById,
+    getAssistantResponse,
+    thread,
+    run,
+    assistantIsLoading,
   };
 };
 

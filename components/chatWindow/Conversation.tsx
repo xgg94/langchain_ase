@@ -10,13 +10,13 @@ export default function Conversation({
   setInput,
   handleSubmit,
   messages,
-  activeRun,
+  isLoading,
   messagesEndRef,
 }: {
   setInput: any;
   handleSubmit: any;
   messages: any;
-  activeRun: any;
+  isLoading: Boolean;
   messagesEndRef: any;
 }) {
   return (
@@ -26,7 +26,7 @@ export default function Conversation({
           className="px-4 py-1 border border-white rounded-full hover:cursor-pointer hover:scale-105"
           onClick={(e) => {
             const prompt = "Ich möchte eine neue Szene erstellen.";
-            setInput(prompt);
+            // setInput(prompt);
             handleSubmit(e, prompt);
           }}
         >
@@ -37,7 +37,7 @@ export default function Conversation({
           onClick={(e) => {
             const prompt =
               "Stelle dich vor. Was kannst du, was machst du und was ist deine Aufgabe?";
-            setInput(prompt);
+            // setInput(prompt);
             handleSubmit(e, prompt);
           }}
         >
@@ -48,7 +48,7 @@ export default function Conversation({
           onClick={(e) => {
             const prompt =
               "Welche Charaktere von mir kennst du? Liste mir alle inklusive ihrer Eigenschaften auf.";
-            setInput(prompt);
+            // setInput(prompt);
             handleSubmit(e, prompt);
           }}
         >
@@ -59,7 +59,7 @@ export default function Conversation({
           onClick={(e) => {
             const prompt =
               "Welche Orte von mir kennst du? Liste mir alle inklusive ihrer Beschreibung auf.";
-            setInput(prompt);
+            // setInput(prompt);
             handleSubmit(e, prompt);
           }}
         >
@@ -74,10 +74,10 @@ export default function Conversation({
                   {message?.role === "user" ? (
                     <span className="text-sm text-blue-400">User: </span>
                   ) : (
-                    <span className="text-sm text-green-400">AI: </span>
+                    <span className="text-sm text-green-400">Assistant: </span>
                   )}
                   <span className="font-normal text-sm ">
-                    {message?.content
+                    {message?.content[0]?.text?.value
                       .split("\n")
                       .map((str: any, index: any) => (
                         <p
@@ -105,7 +105,7 @@ export default function Conversation({
               ))
             : null}
           <div ref={messagesEndRef}></div>
-          {activeRun && (
+          {isLoading && (
             <div className=" flex w-full justify-start">
               <Lottie
                 animationData={typingAnimation}
